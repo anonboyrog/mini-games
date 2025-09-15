@@ -1,0 +1,63 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><script>function showGame(game) {
+    const area = document.getElementById('game-area');
+    if(game === 'math') {
+        area.innerHTML = `
+        <h2>Math Quiz</h2>
+        <p>5 + 3 = ?</p>
+        <input type="number" id="mathAnswer">
+        <button onclick="checkMath()">Submit</button>
+        <p id="mathResult"></p>
+        `;
+    } else if(game === 'guess') {
+        const random = Math.floor(Math.random()*10)+1;
+        area.innerHTML = `
+        <h2>Guess the Number (1-10)</h2>
+        <input type="number" id="guessInput">
+        <button onclick="checkGuess(${random})">Guess</button>
+        <p id="guessResult"></p>
+        `;
+    } else if(game === 'click') {
+        area.innerHTML = `
+        <h2>Click Challenge</h2>
+        <p>Click the button as fast as you can!</p>
+        <button id="clickBtn">Click me!</button>
+        <p>Clicks: <span id="clickCount">0</span></p>
+        `;
+        let count = 0;
+        document.getElementById('clickBtn').onclick = function() {
+            count++; document.getElementById('clickCount').innerText = count;
+        }
+    } else if(game === 'rps') {
+        area.innerHTML = `
+        <h2>Rock-Paper-Scissors</h2>
+        <button onclick="playRPS('rock')">Rock</button>
+        <button onclick="playRPS('paper')">Paper</button>
+        <button onclick="playRPS('scissors')">Scissors</button>
+        <p id="rpsResult"></p>
+        `;
+    }
+}
+
+function checkMath() {
+    const ans = document.getElementById('mathAnswer').value;
+    document.getElementById('mathResult').innerText = (ans == 8) ? "Correct! 🎉" : "Wrong 😢";
+}
+
+function checkGuess(random) {
+    const guess = document.getElementById('guessInput').value;
+    document.getElementById('guessResult').innerText = (guess == random) ? "You guessed it! 🎯" : `Wrong! The number was ${random}`;
+}
+
+function playRPS(player) {
+    const options = ['rock','paper','scissors'];
+    const computer = options[Math.floor(Math.random()*3)];
+    let result = '';
+    if(player === computer) result = "Draw!";
+    else if(
+        (player==='rock' && computer==='scissors') ||
+        (player==='paper' && computer==='rock') ||
+        (player==='scissors' && computer==='paper')
+    ) result = "You win! 🎉";
+    else result = "You lose 😢";
+    document.getElementById('rpsResult').innerText = `Computer chose ${computer}. ${result}`;
+}</script>
